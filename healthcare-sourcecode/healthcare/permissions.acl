@@ -1,0 +1,146 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+rule PatientConsentAccess {
+    description: "Grant access to consent if and only if they had created it"
+    participant(m): "org.mt.healthcare.Patient"
+    operation: ALL
+    resource(v): "org.mt.healthcare.Consent"
+    condition: (v.patient.getIdentifier() == m.getIdentifier())
+    action: ALLOW
+}
+
+rule PatientConsentAccessDefault {
+    description: "Grant access to consent if and only if they had created it"
+    participant: "org.mt.healthcare.Patient"
+    operation: READ
+    resource: "org.mt.healthcare.Consent"
+    action: DENY
+}
+
+rule PatientMedicalReportAccess {
+    description: "Grant access to medical report access"
+    participant: "org.mt.healthcare.Patient"
+    operation: ALL
+    resource: "org.mt.healthcare.MedicalReport"
+    action: DENY
+}
+
+rule PatientPerscriptionAccess {
+    description: "Grant access to perscription access"
+    participant(m): "org.mt.healthcare.Patient"
+    operation: READ
+    resource(v): "org.mt.healthcare.Prescription"
+    condition: (v.patient.getIdentifier() == m.getIdentifier())
+    action: ALLOW
+}
+
+rule PatientRiskAnalysisAccess {
+    description: "Grant access to medical report access"
+    participant: "org.mt.healthcare.Patient"
+    operation: ALL
+    resource: "org.mt.healthcare.RiskAnalysis"
+    action: DENY
+}
+
+
+
+
+rule ProviderAccessPatientConsent {
+    description: "Grant read only access to patient consent information"
+    participant: "org.mt.healthcare.HealthcareProvider"
+    operation: READ
+    resource: "org.mt.healthcare.Consent"
+    action: ALLOW
+}
+
+rule ProviderAccessMedReports {
+    description: "Grant access to medical report information"
+    participant: "org.mt.healthcare.HealthcareProvider"
+    operation: ALL
+    resource: "org.mt.healthcare.MedicalReport"
+    action: ALLOW
+}
+
+
+rule ProviderPerscriptionAccess {
+    description: "Grant access to prescription access"
+    participant: "org.mt.healthcare.HealthcareProvider"
+    operation: ALL
+    resource: "org.mt.healthcare.Prescription"
+    action: ALLOW
+}
+
+rule ProviderRiskAnalysisAccess {
+    description: "Grant access to medical report access"
+    participant: "org.mt.healthcare.HealthcareProvider"
+    operation: ALL
+    resource: "org.mt.healthcare.RiskAnalysis"
+    action: ALLOW
+}
+
+
+
+
+
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule NetworkAdminSystem {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+
+rule ProviderNetworkAccess {
+    description: "Grant access to healthcare network"
+    participant: "org.mt.healthcare.HealthcareProvider"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule PatientNetworkAccess {
+    description: "Grant access to healthcare network"
+    participant: "org.mt.healthcare.Patient"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule ProviderSystemAccess {
+    description: "Grant access to system access"
+    participant: "org.mt.healthcare.HealthcareProvider"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+rule PatientSystemAccess {
+    description: "Grant access to system access"
+    participant: "org.mt.healthcare.Patient"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+

@@ -1,0 +1,88 @@
+particpants
+{
+  "$class": "org.mt.healthcare.HealthcareProvider",
+  "id": "provider1",
+  "name": "Toronto General Hospital",
+  "address": "123 University Ave",
+  "phone": "412 123 1232"
+}
+
+{
+  "$class": "org.mt.healthcare.HealthcareProvider",
+  "id": "provider2",
+  "name": "Dr. Smith",
+  "address": "321 Church St",
+  "phone": "416 123 3322"
+}
+
+{
+  "$class": "org.mt.healthcare.Patient",
+  "id": "joelee100",
+  "name": "Joe Lee",
+  "address": "321 Lee Street",
+  "phone": "647 612 3222",
+  "physicalDescription": "30 ",
+  "provider": "resource:org.mt.healthcare.HealthcareProvider#provider2"
+}
+
+add consent
+{
+  "$class": "org.mt.healthcare.Consent",
+  "id": "6946",
+  "patient": "resource:org.mt.healthcare.Patient#joelee100",
+  "donor": true
+}
+
+medical report
+{
+  "$class": "org.mt.healthcare.MedicalReport",
+  "id": "md1001",
+  "patient": "resource:org.mt.healthcare.Patient#joelee100",
+  "provider": "resource:org.mt.healthcare.HealthcareProvider#provider2",
+  "dateTime": "April 01 2020 1:00pm",
+  "appointmentType": "APPOINTMENT",
+  "comments": "Scheduled"
+}
+
+
+medical report update
+{
+  "$class": "org.mt.healthcare.MedicalReport",
+  "id": "md1001",
+  "patient": "resource:org.mt.healthcare.Patient#joelee100",
+  "provider": "resource:org.mt.healthcare.HealthcareProvider#provider2",
+  "dateTime": "April 01 2020 1:00pm",
+  "appointmentType": "APPOINTMENT",
+  "comments": "Patient reported cold symptoms. Perscribed medication to counter"
+}
+
+
+add prescription
+{
+  "$class": "org.mt.healthcare.AddPrescription",
+  "patient": "resource:org.mt.healthcare.Patient#joelee100",
+  "provider": "resource:org.mt.healthcare.HealthcareProvider#provider2",
+  "drugName": "Coldfluzia",
+  "timestamp": "2020-04-05T06:29:27.836Z"
+}
+
+add riskanalysis
+{
+  "$class": "org.mt.healthcare.RiskAnalysis",
+  "id": "ra101",
+  "patient": "resource:org.mt.healthcare.Patient#joelee100",
+  "diabetes": "false",
+  "smoker": "true",
+  "obesity": "false",
+  "alcohol": "true",
+  "riskAnalysisScore": 0.0
+}
+
+calcaulate score
+{
+  "$class": "org.mt.healthcare.UpdateRiskAnalysis",
+  "riskAnalysis": "resource:org.mt.healthcare.RiskAnalysis#ra101",
+  "timestamp": "2020-04-05T19:13:17.612Z"
+}
+
+see score using GET on risk analysis
